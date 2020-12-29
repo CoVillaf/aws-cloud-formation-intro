@@ -19,7 +19,8 @@ CloudFormation is an Infrastructure as Code toll for AWS and designed for AWS. I
 [Template] -------------> [CloudFormation] ------------------> [CloudFormation Stack]
 
 
-<h3>YAML:</h3>
+<h3>YAML Format Example:</h3>
+<pre>
 <code>
 AWSTemplateVersion: "2010-09-09"
 Description: String Description
@@ -31,8 +32,8 @@ Resources:
          InstanceType: t2.micro
 
 </code>
-
-<h3>JSON:</h3>
+</pre>
+<h3>JSON Format Example:</h3>
 <pre>
 <code>
 {
