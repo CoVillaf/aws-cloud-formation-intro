@@ -1,4 +1,4 @@
-# Amazon Web Services -CloudFormation Introduction
+# Amazon Web Services - CloudFormation Introduction
 Introduction to AWS CloudFormation
 
 Learn how to use CloudFormation, the AWS approach to automating the management of complex infrastructure and environments in a safe, reliable and repeatable manner.
@@ -20,7 +20,7 @@ CloudFormation is an Infrastructure as Code toll for AWS and designed for AWS. I
 
 
 <h3>YAML Format Example:</h3>
-<pre>
+<pre style="color=brown">
 <code>
 AWSTemplateVersion: "2010-09-09"
 Description: String Description
@@ -33,8 +33,9 @@ Resources:
 
 </code>
 </pre>
+
 <h3>JSON Format Example:</h3>
-<pre>
+<pre style="color=brown">
 <code>
 {
    "AWSTemplateVersion: "2010-09-09",
@@ -42,6 +43,7 @@ Resources:
    "Resources": { set of resources}
 }
 </code>
+
 </pre>
 <hr/>
 To download latest Repo Please <a href="https://github.com/cloudxperts/aws-cloud-formation-intro/archive/main.zip">Click Here..</a>
