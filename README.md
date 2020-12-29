@@ -33,6 +33,7 @@ Resources:
 </code>
 
 <h3>JSON:</h3>
+<pre>
 <code>
 {
    "AWSTemplateVersion: "2010-09-09",
@@ -40,6 +41,6 @@ Resources:
    "Resources": { set of resources}
 }
 </code>
-
+</pre>
 <hr/>
 To download latest Repo Please <a href="https://github.com/cloudxperts/aws-cloud-formation-intro/archive/main.zip">Click Here..</a>
