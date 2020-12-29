@@ -1,0 +1,13 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Simple template which will provision EC2 instance in default VPC.
+
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-0be2609ba883822ec #Provide the Image Id You want
+      Tags:
+        - Key: Name
+          Value: EC2Instance
+    
