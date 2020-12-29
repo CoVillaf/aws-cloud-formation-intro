@@ -15,14 +15,12 @@ CloudFormation is an Infrastructure as Code toll for AWS and designed for AWS. I
    <li></li>
 </ol>
 
-            Create                            Provision
+                   Create                            Provision
 [Template] -------------> [CloudFormation] ------------------> [CloudFormation Stack]
-                                                                  |       |      |
-                                                                  RDS     EC2    AWS Resources
 
 
-YAML:
-
+<h3>YAML:</h3>
+<code>
 AWSTemplateVersion: "2010-09-09"
 Description: String Description
 Resources:
@@ -32,15 +30,16 @@ Resources:
          InstanceId: AMI-Id
          InstanceType: t2.micro
 
+</code>
 
-JSON:
-
+<h3>JSON:</h3>
+<code>
 {
    "AWSTemplateVersion: "2010-09-09",
    "Description" : "JSON String",
    "Resources": { set of resources}
 }
-
+</code>
 
 <hr/>
 To download latest Repo Please <a href="https://github.com/cloudxperts/aws-cloud-formation-intro/archive/main.zip">Click Here..</a>
