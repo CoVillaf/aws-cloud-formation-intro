@@ -20,7 +20,7 @@ CloudFormation is an Infrastructure as Code toll for AWS and designed for AWS. I
 
 
 <h3>YAML Format Example:</h3>
-<pre style="color=brown">
+<pre style="color:brown">
 <code>
 AWSTemplateVersion: "2010-09-09"
 Description: String Description
@@ -35,7 +35,7 @@ Resources:
 </pre>
 
 <h3>JSON Format Example:</h3>
-<pre style="color=brown">
+<pre style="color:brown">
 <code>
 {
    "AWSTemplateVersion: "2010-09-09",
