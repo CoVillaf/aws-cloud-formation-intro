@@ -1,0 +1,38 @@
+# Mapping section
+Mappings:
+    RegionMap:
+      us-east-1:
+        AMI:  ami-0be2609ba883822ec
+      us-west-1:
+        AMI: ami-0be2609ba883822ec #dummy image id please checnge with proper ami id
+      eu-west-1:
+        AMI: ami-0be2609ba883822ec  #dummy image id please checnge with proper ami id
+# Resources section
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: 
+        Fn::FindInMap:
+          - RegionMap
+          - !Ref AWS::Region
+          - AMI
+      SecurityGroups:
+        - !Ref MySecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Join
+          - "-"
+          - - "EC2 Instance"
+            - !Ref AWS::Region
+  
+  MySecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "SSH port 22 connection access"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0

@@ -1,0 +1,11 @@
+# Intrinsic Function: Built in Function in AWS CloudFormation that help you to manage AWS stack
+# 1. Join
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-0be2609ba883822ec
+      Tags:
+        - Key: Name 
+          Value: !Join [" ", ["EC2", "Instance", "with", "Fn", "Join"]]

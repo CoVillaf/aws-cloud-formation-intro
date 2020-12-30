@@ -12,7 +12,10 @@ CloudFormation is an Infrastructure as Code toll for AWS and designed for AWS. I
 
 <ol>
    <li>Introduction CloudFormation Sample Template</li>
-   <li></li>
+   <li>Intrinsic Function</li>
+   <li>Creating multiple resources in cloudformation</li>
+   <li>Pseudo paramaters in CloudFormation</li>
+   <li>Mapping in cloudformation</li>
 </ol>
 
                    Create                            Provision
@@ -20,7 +23,7 @@ CloudFormation is an Infrastructure as Code toll for AWS and designed for AWS. I
 
 
 <h3>YAML Format Example:</h3>
-<pre style="color:brown">
+<pre>
 <code>
 AWSTemplateVersion: "2010-09-09"
 Description: String Description
@@ -35,7 +38,7 @@ Resources:
 </pre>
 
 <h3>JSON Format Example:</h3>
-<pre style="color:brown">
+<pre >
 <code>
 {
    "AWSTemplateVersion: "2010-09-09",
