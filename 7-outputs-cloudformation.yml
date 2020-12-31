@@ -1,0 +1,55 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Outputs example template
+
+Parameters:
+    NameOfService:
+        Description: Please provide the name of server/application
+        Type: String
+        Default: Default-application
+    KeyName:
+        Description: Please select the key pair from below dropdown
+        Type: AWS::EC2::KeyPair::KeyName
+        Default: default-keypair
+
+Mappings:
+    RegionInMap:
+        us-east-1:
+            AMI: ami-0be2609ba883822ec
+        us-west-1:
+            AMI: ami-0be2609ba883822ec
+        eu-west-1:
+            AMI: ami-0be2609ba883822ec
+
+Resources:
+    ptechApplicationInstance:
+        Type: AWS::EC2::Instance
+        Properties:
+            InstanceType: t2.micro
+            ImageId:
+                !FindInMap
+                    - RegionInMap
+                    - !Ref AWS::Region
+                    - AMI
+            SecurityGroups:
+                - !Ref ptechSecGroup
+            Tags:
+                - Key: Name
+                  Value: !Join ["-",[!Ref NameOfService, !Ref AWS::Region]]
+            KeyName: !Ref KeyName
+    ptechSecGroup:
+        Type: AWS::EC2::SecurityGroup
+        Properties:
+            GroupDescription: allow ssh connection
+            SecurityGroupIngress:
+                -   IpProtocol: tcp
+                    FromPort: 22
+                    ToPort: 22
+                    CidrIp: 0.0.0.0/0
+
+Outputs:
+    ptechAppPublicIP:
+        Description: PtechApplication Public IP Address
+        Value: !GetAtt ptechApplicationInstance.PublicIp
+    PtechAppDNSName:
+        Description: PtechApplication Public DNS Name
+        Value: !GetAtt ptechApplicationInstance.PublicDnsName
