@@ -1,0 +1,48 @@
+# Input Parameters
+# String
+# Number
+# List<Number>
+# CommaDelimiltedList etc....
+Parameters:
+  NameOfService:
+    Description: The name of the service this stack is ti be used.
+    Type: String
+  KeyName:
+    Description: Name of an existing EC2 KeyPair to anable SSH access into the server
+    Type: AWS::EC2::KeyPair::KeyName
+
+Mappings:
+  RegionMap:
+    us-east-1:
+      AMI: ami-0be2609ba883822ec
+    us-west-1:
+      AMI: ami-0be2609ba883822sd #change with valid ami id
+    eu-west-1:
+      AMI: ami-0be2609ba88382sds #change with valid ami id
+
+Resources:
+  ptechEC2instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      KeyName: !Ref KeyName
+      ImageId:
+        !FindInMap
+          - RegionMap
+          - !Ref AWS::Region
+          - AMI
+      SecurityGroups:
+        - !Ref ptechWEBsg
+      Tags:
+        - Key: Name
+          Value: !Join ["-", [!Ref NameOfService, !Ref AWS::Region]]
+
+  ptechWEBsg:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "SSH Connection for WebSrv"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0

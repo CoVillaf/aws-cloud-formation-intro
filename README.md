@@ -16,6 +16,7 @@ CloudFormation is an Infrastructure as Code toll for AWS and designed for AWS. I
    <li>Creating multiple resources in cloudformation</li>
    <li>Pseudo paramaters in CloudFormation</li>
    <li>Mapping in cloudformation</li>
+   <li>Imput Parameters in cloudformation</li>
 </ol>
 
                    Create                            Provision
