@@ -1,0 +1,49 @@
+#in this changeset example template we have removed the port 22 ingress rule
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Changeset cloudformation example
+
+Parameters:
+    KeyName:
+        Type: AWS::EC2::KeyPair::KeyName
+        Description: Provide the name of KeyPair
+
+Resources:
+    ptechEC2instance:
+        Type: AWS::EC2::Instance
+        Description: EC2 Instance for PTech Application
+        Properties:
+            InstanceType: t2.micro
+            ImageId: ami-0be2609ba883822ec
+            KeyName: !Ref KeyName
+            SecurityGroups:
+                -   !Ref ptechWebSshSG
+            Tags:
+                -   Key: Name
+                    Value: !Join ["-", ["ptech-app", !Ref AWS::Region]]
+            UserData:
+                !Base64 |
+                    #!/bin/bash
+                    yum updaye -y
+                    yum install httpd -y
+                    systemctl enable httpd
+                    echo "This is from ptech server" > /var/www/html/index.html
+                    systemctl start httpd
+
+    ptechWebSshSG:
+        Type: AWS::EC2::SecurityGroup
+        Properties:
+            GroupDescription: Allow SSH and HTTPS Connection
+            SecurityGroupIngress:
+                # -   IpProtocol: tcp
+                #     FromPort: 22
+                #     ToPort: 22
+                #     CidrIp: 0.0.0.0/0
+                -   IpProtocol: tcp
+                    FromPort: 80
+                    ToPort: 80
+                    CidrIp: 0.0.0.0/0
+
+Outputs:
+    ptechApplicationDnsURL:
+        Description: Ptech application web url
+        Value: !Join ["", ["http://", !GetAtt ptechEC2instance.PublicDnsName]]
