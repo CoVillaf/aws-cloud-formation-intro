@@ -59,4 +59,7 @@ Resources:
 <hr/>
 To download latest Repo Please <a href="https://github.com/cloudxperts/aws-cloud-formation-intro/archive/main.zip">Click Here..</a>
 
+<hr/>
+
 <img src="./AWS_Infrastructure.jpg" alt="AWS CloudFormation Infrastructure">
+<hr/>
