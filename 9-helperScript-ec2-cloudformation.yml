@@ -1,0 +1,77 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: CloudFormation helper script example
+
+Parameters:
+    NameOfService:
+        Description: Provide the name of Service.
+        Type: String
+        Default: default-application
+    KeyName:
+        Description: Provide the name of KeyPair.
+        Type: AWS::EC2::KeyPair::KeyName
+
+Mappings:
+    RegionInMap:
+        us-east-1:
+            AMI: ami-0be2609ba883822ec
+        us-west-1:
+            AMI: ami-0be2609ba883822ec #provide the valid AMI
+
+Resources:
+    ptechEC2instance:
+        Type: AWS::EC2::Instance
+        Description: EC2 instance for PTech Application
+        Metadata:
+            AWS::CloudFormation::Init:
+                config:
+                    packages:
+                        yum:
+                            httpd: []
+                            php: []
+                    files:
+                        /var/www/html/index.php:
+                            content: !Sub |
+                                <?php print "Hello world ptech page is here"; ?>
+                    services:
+                        sysvinit:
+                            httpd:
+                                enabled: true
+                                ensureRunning: true
+        Properties:
+            ImageId: !FindInMap [RegionInMap, !Ref AWS::Region, "AMI" ]
+            InstanceType: t2.micro
+            SecurityGroups:
+                -   !Ref ptechWebSshSG
+            Tags:
+                -   Key: Name
+                    Value: !Join ["-", [!Ref NameOfService, !Ref AWS::Region]]
+            KeyName: !Ref KeyName
+            UserData:
+                "Fn::Base64":
+                    !Sub |
+                        #!/bin/bash
+                        #Ensure AWS CFN Bootstrap is the latest
+                        yum install -y aws-cfn-bootstrap
+                        #/Install the files and packages from the metadata
+                        /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource ptechEC2instance --region ${AWS::Region}
+    ptechWebSshSG:
+        Type: AWS::EC2::SecurityGroup
+        Properties:
+            GroupDescription: Allow SSH and HTTPS connection
+            SecurityGroupIngress:
+                -   IpProtocol: tcp # ssh connection
+                    FromPort: 22
+                    ToPort: 22
+                    CidrIp: 0.0.0.0/0
+                -   IpProtocol: tcp #http access for web
+                    FromPort: 80
+                    ToPort: 80
+                    CidrIp: 0.0.0.0/0
+
+Outputs:
+    ptechApplicationDnsURL:
+        Description: PTech Application DNS URL to access the web application
+        Value: !GetAtt ptechEC2instance.PublicDnsName
+    ptechApplicationPublicIP:
+        Description: PTech Application Public IP Address
+        Value: !GetAtt ptechEC2instance.PublicIp
