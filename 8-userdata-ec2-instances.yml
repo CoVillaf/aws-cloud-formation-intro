@@ -1,0 +1,69 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: user data example template
+
+Parameters:
+    NameOfService:
+        Type: String
+        Default: default-application
+        Description: Please provide the service/application name
+    KeyName:
+        Type: AWS::EC2::KeyPair::KeyName
+        Default: default-no-keypair
+        Description: Please select the key from below list
+
+Mappings:
+    RegionInMap:
+        us-east-1:
+            AMI: ami-0be2609ba883822ec
+        us-west-1:
+            AMI: ami-0be2609ba883822ec #change the ami id with valid one
+        eu-west-1:
+            AMI: ami-0be2609ba883822ec
+
+Resources:
+    ptechInstance:
+        Type: AWS::EC2::Instance
+        Properties:
+            InstanceType: t2.micro
+            ImageId: !FindInMap
+                - RegionInMap
+                - !Ref AWS::Region
+                - AMI
+            SecurityGroups:
+                - !Ref ptechWebSecurityGroup
+            Tags:
+                - Key: Name
+                  Value: !Join ["-", [!Ref NameOfService , !Ref AWS::Region]]
+            KeyName: !Ref KeyName
+            UserData:
+                !Base64 |
+                    #!/bin/bash
+                    yum updaye -y
+                    yum install httpd -y
+                    systemctl enable httpd
+                    echo "This is from ptech server" > /var/www/html/index.html
+                    systemctl start httpd
+    ptechWebSecurityGroup:
+        Type: AWS::EC2::SecurityGroup
+        Properties:
+            GroupDescription: Allow ssh port 22 connaction
+            SecurityGroupIngress:
+                - IpProtocol: tcp
+                  FromPort: 22
+                  ToPort: 22
+                  CidrIp: 0.0.0.0/0
+                - IpProtocol: tcp
+                  FromPort: 80
+                  ToPort: 80
+                  CidrIp: 0.0.0.0/0
+            Tags:
+                - Key: Name
+                  Value: !Join ["-", ["ptech-sg", !Ref AWS::Region]]
+
+Outputs:
+    ptechApplicationPublicDnsURL:
+        Description: Public dnsname URL for PTech Application
+        Value: !Join ["", ["http://", !GetAtt ptechInstance.PublicDnsName ]]
+    ptechApplicationPublicIP:
+        Description: Public IP Address for PTech Application
+        Value: !GetAtt ptechInstance.PublicIp
