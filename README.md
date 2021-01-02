@@ -20,6 +20,10 @@ CloudFormation is an Infrastructure as Code toll for AWS and designed for AWS. I
    <li>Outputs in CloudFormation</li>
    <li>Userdata in CloudFormation</li>
    <li>Helper script in CloudFormation</lai>
+   <li>Change set script cloudformation - Sample Template</li>
+   <li>Change set script cloudformation - Change set example 1</li>
+   <li>Change set script cloudformation - Change set example 2</li>
+   <li>Fullstack Cloudformation Template</li>
 </ol>
 
                 Create                            Provision
@@ -54,3 +58,5 @@ Resources:
 </pre>
 <hr/>
 To download latest Repo Please <a href="https://github.com/cloudxperts/aws-cloud-formation-intro/archive/main.zip">Click Here..</a>
+
+<img src="./AWS_Infrastructure.jpg" alt="AWS CloudFormation Infrastructure">
